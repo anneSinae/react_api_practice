@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import useAsync from './useAsync';
+import { useAsync } from 'react-async';
 import User from './User';
 
 async function getUsers() {
@@ -9,13 +9,14 @@ async function getUsers() {
 }
 
 function Users() {
-  const [state, refetch] =useAsync(getUsers, [], true);
   const [userId, setUserId] = useState(null);
+  const { data: users, error, isLoading, reload } = useAsync({
+    promiseFn : getUsers
+  })
 
-  const { loading, data : users, error } = state;
-  if (loading) return <div>loading..</div>
+  if (isLoading) return <div>loading..</div>
   if (error) return <div>error..</div>
-  if (!users) return <button onClick={refetch}>request data</button>;
+  if (!users) return <button onClick={reload}>request data</button>;
 
   return (
     <>
@@ -26,7 +27,7 @@ function Users() {
         </li>
         ))}
       </ul>
-      <button onClick={refetch}>request again</button>
+      <button onClick={reload}>request again</button>
       { userId && <User id={userId} />}
     </>
   );
