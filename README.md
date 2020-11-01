@@ -5,3 +5,4 @@
 5. Manage api request by custom hook : rendering data by button click 
 6. Manage api request by custom hook : show Individual data when list click
 7. Manage api request by react-async(library)
+8. Manage api request by react-async(library): rendering data by button click
